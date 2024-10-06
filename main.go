@@ -250,6 +250,7 @@ func encrypt_custom(plainText string) string {
 		if _, ok := encryptMap[char]; ok {
 			encryptedText.WriteRune(encryptMap[char])
 		} else {
+			// if the characters is not in the map, then does not encrypt it
 			encryptedText.WriteRune(char)
 		}
 	}
@@ -260,6 +261,8 @@ func decrypt_custom(encryptedText string) string {
 	decryptMap := createDecryptMap()
 	var decryptedText strings.Builder
 	for _, char := range encryptedText {
+		// First checks is the curren rune is existing in the map list
+		// if it does returns the coresponding character from the list
 		if _, ok := decryptMap[char]; ok {
 			decryptedText.WriteRune(decryptMap[char])
 		} else {
