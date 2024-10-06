@@ -49,7 +49,7 @@ func main() {
 		}
 
 		// Asks user does he want to continue with using the tool
-		fmt.Print("\n If you want to continue using the tool press 'Y' and press Enter: ")
+		fmt.Print("\n If you want to continue using the tool choose 'Y' and press \"Enter\": ")
 		var noExit string
 		reader := bufio.NewReader(os.Stdin)
 		noExit, _ = reader.ReadString('\n')
@@ -68,7 +68,7 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 	encoding = ""
 	// Ввод операции шифрования или дешифрования-Input of encryption or decryption operation
 	for {
-		fmt.Println("\nSelect operation (1/2) and press Enter:")
+		fmt.Println("\nSelect operation (1/2) and press \"Enter\":")
 		fmt.Println("1. Encrypt.")
 		fmt.Println("2. Decrypt.")
 		reader := bufio.NewReader(os.Stdin)
@@ -88,7 +88,7 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 
 	// Ввод выбора шифра
 	for {
-		fmt.Println("\nSelect cypher and press Enter:")
+		fmt.Println("\nSelect cypher and press \"Enter\":")
 		fmt.Println("1. ROT13.")
 		fmt.Println("2. Reverse.")
 		fmt.Println("3. Random mapping.")
@@ -111,7 +111,7 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 	}
 	// enter message from custom
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("\nEnter the message and press Enter: ")
+	fmt.Println("\nEnter the message and press \"Enter\": ")
 	message, _ = reader.ReadString('\n')
 	message = strings.TrimSpace(message) // Remove newlines and spaces
 	return
