@@ -269,8 +269,3 @@ func decrypt_custom(encryptedText string) string {
 	}
 	return decryptedText.String()
 }
-
-/* func isEmpty (message string) bool {
-	if len
-	return true
-} */
