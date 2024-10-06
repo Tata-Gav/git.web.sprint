@@ -12,8 +12,8 @@ The Cypher Tool consists of the following functions:
 - `decrypt_rot13`: Decrypts messages encrypted with the ROT13 cipher.
 - `encrypt_reverse`: Encrypts messages by reversing the characters.
 - `decrypt_reverse`: Decrypts messages  by reversing the characters.
-- `encrypt_ mapping`:Encrypts messages custem maps for letters
-- `decrypt_reverse`:Decrypts messages custem maps for letters
+- `encrypt_ mapping`:Encrypts messages custem maps for the characters.
+- `decrypt_reverse`:Decrypts messages custem maps for the characters.
 
 ## What the Cypher Tool does
 
