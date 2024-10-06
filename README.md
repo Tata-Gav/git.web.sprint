@@ -6,29 +6,28 @@ The **Cypher Tool** is a command-line application that allows users to encrypt a
 
 The Cypher Tool consists of the following functions:
 
-- `main`: The main entry point of the application.
-- `getInput`: Handles user input for selecting operations and ciphers.
-- `encrypt_rot13`: Encrypts messages using the ROT13 cipher.
-- `decrypt_rot13`: Decrypts messages encrypted with the ROT13 cipher.
-- `encrypt_reverse`: Encrypts messages by reversing the characters.
-- `decrypt_reverse`: Decrypts messages  by reversing the characters.
-- `encrypt_ mapping`:Encrypts messages custem maps for the characters.
-- `decrypt_reverse`:Decrypts messages custem maps for the characters.
+- `main()`: The main entry point of the application.
+- `getInput() (toEncrypt bool, encoding string, message string)`: Handles user input for selecting operations and ciphers.
+- `readInput() string `: Reads the input from the keyboard
+- `encrypt_rot13(s string) string`: Encrypts messages using the ROT13 cipher and returns encrypted string.
+- `decrypt_rot13(s string) string`: Decrypts messages encrypted with the ROT13 cipher and returns decrypted string.
+- `encrypt_reverse(s string) string`: Encrypts messages by reversing the characters and returns encrypted string.
+- `decrypt_reverse(s string) string`: Decrypts messages  by reversing the characters and returns decrypted string.
+- `createEncryptMap() map[rune]rune`: Stores the map/list for all standard printable ASCI characters needed for encryption
+- `createDecryptMap() map[rune]rune`: Same as `createEncryptMap` but in revers
+- `encrypt_mappin(plainText string) string`: Encrypt message by using encryptMap list for the characters and returns encrypted string.
+- `decrypt_mapping(encryptedText string) string `: Decrypts messages custem maps for the characters and returns decrypted string.
+
 
 ## What the Cypher Tool does
 
-- Greets the user
-- Allows the user to select the operation (encrypt or decrypt)
-- Allows the user to select the encryption type
-- Allows the user to input the message to encrypt/decrypt
-- Outputs the result of the operation
-- Offer contue choose 
+The Cypher Tool allows users to encrypt and decrypt data using several encryption methods. The first two methods, **ROT13** and **Reverse**, are designed specifically for Latin alphabet characters. The third method, **Random Mapping**, can encrypt and decrypt all standard printable ASCII characters.
 
 
 ## Features
 
 - Greets the user.
-- Allows the user to select the operation (encrypt, decrypt).
+- Allows the user to select the operation (encrypt or decrypt).
 - Allows the user to select the encryption type (ROT13, Reverse, or Mapping).
 - Accepts user input for messages to encrypt/decrypt.
 - Outputs the result of the encryption or decryption operation.
