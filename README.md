@@ -43,17 +43,17 @@ $ ./cyphertool
 # Welcome to the Cypher Tool!
 
 ## Select Operation (1/2/3):
-- **1.** Encrypt
-- **2.** Decrypt
+- 1. Encrypt
+- 2. Decrypt
 
 ```bash
 $ 1
 # Cypher Tool Instructions
 
 ## Select Cypher (1/2/3):
-- **1.** ROT13
-- **2.** Reverse
-- **3.** Random Mapping
+- 1. ROT13
+- 2. Reverse
+- 3. Random Mapping
 
 ```bash
 $ 3
