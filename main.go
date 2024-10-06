@@ -195,4 +195,5 @@ func decrypt_mapping (s string) string {
 	// for k, v := emojiMap {
 	
 	return "decrypt mapping not ready"
+	//tata
 }
