@@ -27,7 +27,7 @@ The Cypher Tool consists of the following functions:
 ## Features
 
 - Greets the user.
-- Allows the user to select the operation (encrypt, decrypt, or exit).
+- Allows the user to select the operation (encrypt, decrypt).
 - Allows the user to select the encryption type (ROT13, Reverse, or Mapping).
 - Accepts user input for messages to encrypt/decrypt.
 - Outputs the result of the encryption or decryption operation.
