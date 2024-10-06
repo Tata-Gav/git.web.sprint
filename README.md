@@ -63,7 +63,7 @@ $ This is a secret message.
 Decrypted message using reverse:
 $ Gdre re M eqSCqf jqeeMNq.
 
-Enter the "Y" or "y" + Enter if you want to continue:
+## Enter the "Y" or "y" + Enter if you want to continue:
 
 ```bash
 $ y
