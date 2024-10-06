@@ -7,30 +7,41 @@ import (
 	"strings"
 )
 
-func main() {
-	fmt.Println("\nWelcome to the Cypher Tool 2024")
-	// ----------------    TO DO list --------------
-	// Documentation with Markdown
+const (
+	// ANSI escape codes for colors used in printing the text
+	Reset  = "\033[0m"
+	Red    = "\033[31m"
+	Green  = "\033[32m"
+	Yellow = "\033[33m"
+	Blue   = "\033[34m"
+)
 
+func main() {
+	fmt.Println(Blue + "\n\t| ------------------------------- |")
+	fmt.Println("\t| Welcome to the Cypher Tool 2024 |")
+	fmt.Println("\t| ------------------------------- |" + Reset)
+
+	// variable for Encrypt or Decrypt choice
 	var toEncrypt bool
+	// variable for the type of encoding user chooses
 	var encoding string
+	// variable for the message to be encrypted or decrypted
 	var message string
 
 	for {
 		toEncrypt, encoding, message = getInput()
 		if toEncrypt {
-			fmt.Println("\nEncrypted message using " + encoding + ": ")
+			fmt.Println(Green + "\nEncrypted message using " + Red + encoding + Green + ": " + Reset)
 		} else {
-			fmt.Println("\nDecrypted message using " + encoding + ": ")
+			fmt.Println(Green + "\nDecrypted message using " + Red + encoding + Green + ": " + Reset)
 		}
 
+		// calls the coresponding encrypting or decrypting function based on users choice from the menu
 		switch encoding {
 		case "ROT13":
 			if toEncrypt {
-
 				fmt.Println(encrypt_rot13(message))
 			} else {
-
 				fmt.Println(decrypt_rot13(message))
 			}
 		case "reverse":
@@ -39,7 +50,7 @@ func main() {
 			} else {
 				fmt.Println(decrypt_reverse(message))
 			}
-		case "custom":
+		case "Random mapping":
 			// Custom cipher handling
 			if toEncrypt {
 				fmt.Println(encrypt_custom(message))
@@ -49,13 +60,14 @@ func main() {
 		}
 
 		// Asks user does he want to continue with using the tool
-		fmt.Print("\n If you want to continue using the tool choose 'Y' and press \"Enter\": ")
+		fmt.Print("\n If you want to continue using the tool choose " + Red + "'Y'" + Reset + " and press \"Enter\": ")
 		var noExit string
 		reader := bufio.NewReader(os.Stdin)
 		noExit, _ = reader.ReadString('\n')
 		noExit = strings.TrimSpace(noExit) // Remove newlines and spaces
 		if !(noExit == "y" || noExit == "Y") {
-			fmt.Println("\n Tank you for using Cyper Tool 2024\n")
+			// Exit message
+			fmt.Println(Blue + "\n\t****  Thank you for using Cyper Tool 2024  ****\n" + Reset)
 			break
 		}
 	}
@@ -66,14 +78,14 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 	var cypherInput string
 	toEncrypt = false
 	encoding = ""
-	// Ввод операции шифрования или дешифрования-Input of encryption or decryption operation
+	// Ввод операции шифрования или дешифрования
+	// Input of encryption or decryption operation
 	for {
-		fmt.Println("\nSelect operation (1/2) and press \"Enter\":")
-		fmt.Println("1. Encrypt.")
-		fmt.Println("2. Decrypt.")
-		reader := bufio.NewReader(os.Stdin)
-		operationInput, _ = reader.ReadString('\n')
-		operationInput = strings.TrimSpace(operationInput) // Remove newlines and spaces
+		fmt.Println("\nSelect operation 1 or 2 and press \"Enter\":")
+		fmt.Println(Blue + "\t1. Encrypt." + Reset)
+		fmt.Println(Blue + "\t2. Decrypt." + Reset)
+		fmt.Print(Green + "Enter your input: " + Reset)
+		operationInput = readInput()
 
 		if operationInput == "1" {
 			toEncrypt = true
@@ -82,19 +94,18 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 			toEncrypt = false
 			break
 		} else {
-			fmt.Println("Invalid input. Please select 1 or 2")
+			fmt.Println(Red + "\n!!! Invalid input. Please select 1 or 2 !!!" + Reset)
 		}
 	}
 
 	// Ввод выбора шифра
 	for {
 		fmt.Println("\nSelect cypher and press \"Enter\":")
-		fmt.Println("1. ROT13.")
-		fmt.Println("2. Reverse.")
-		fmt.Println("3. Random mapping.")
-		reader := bufio.NewReader(os.Stdin)
-		cypherInput, _ = reader.ReadString('\n')
-		cypherInput = strings.TrimSpace(cypherInput) // Remove newlines and spaces
+		fmt.Println(Blue + "\t1. ROT13.")
+		fmt.Println("\t2. Reverse.")
+		fmt.Println("\t3. Random mapping." + Reset)
+		fmt.Print(Green + "Enter your input: " + Reset)
+		cypherInput = readInput()
 
 		if cypherInput == "1" {
 			encoding = "ROT13"
@@ -103,24 +114,37 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 			encoding = "reverse" // Используем toROT13 для выбора между шифрами
 			break
 		} else if cypherInput == "3" {
-			encoding = "custom"
+			encoding = "Random mapping"
 			break
 		} else {
-			fmt.Println("Invalid input. Please select 1, 2 or 3")
+			fmt.Println(Red + "\n!!! Invalid input. Please select 1, 2 or 3 !!!" + Reset)
 		}
 	}
-	// enter message from custom
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("\nEnter the message and press \"Enter\": ")
-	message, _ = reader.ReadString('\n')
-	message = strings.TrimSpace(message) // Remove newlines and spaces
+	// enter message from customer
+	for {
+		fmt.Println(Green + "\nEnter the message and press \"Enter\": " + Reset)
+		message = readInput()
+		if message != "" {
+			break
+		}
+		fmt.Println(Red + "\tWrong or empty input! Try again!" + Reset)
+	}
 	return
+}
+
+// readInput reads a line from standard input and returns it as a trimmed string
+func readInput() string {
+	reader := bufio.NewReader(os.Stdin)
+	input, _ := reader.ReadString('\n')
+	return strings.TrimSpace(input) // Remove newlines and spaces
 }
 
 // Encrypt the message with rot13
 func encrypt_rot13(s string) string {
 	result := ""
+	// temp variable for processing one character at time from the string
 	var ch rune
+	// with this cycle you go throu all string character by character
 	for i := 0; i < len(s); i++ {
 		ch = rune(s[i])
 
@@ -184,7 +208,15 @@ func createEncryptMap() map[rune]rune {
 		'p': 'Z', 'P': 'B', 'q': 's', 'Q': 'U', 'r': 'C', 'R': 'b',
 		's': 'e', 'S': 'E', 't': 'f', 'T': 'G', 'u': 'H', 'U': 'k',
 		'v': 'R', 'V': 'P', 'w': 'o', 'W': 'h', 'x': 'l', 'X': 'O',
-		'y': 'i', 'Y': 'L', 'z': 'J', 'Z': 'n',
+		'y': 'i', 'Y': 'L', 'z': 'J', 'Z': 'n', '0': '2', '1': '4',
+		'2': '6', '3': '1', '4': '8', '5': '7', '6': '0', '7': '9',
+		'8': '5', '9': '3',
+		'!': ')', '"': '>', '#': '(', '$': '[', '%': '!', '&': '{',
+		'\'': ':', '(': ';', ')': '@', '*': '#', '+': ',', ',': '}',
+		'-': '~', '.': '"', '/': '\\', ':': '_', ';': '&', '<': '-',
+		'=': '.', '>': '`', '?': '*', '@': '%', '[': '|', '\\': '/',
+		']': '^', '^': '?', '_': '=', '`': '+', '{': ']', '|': '<',
+		'}': '$', '~': '\'',
 	}
 }
 
@@ -199,6 +231,12 @@ func createDecryptMap() map[rune]rune {
 		'e': 's', 'E': 'S', 'f': 't', 'G': 'T', 'H': 'u', 'k': 'U',
 		'R': 'v', 'P': 'V', 'o': 'w', 'h': 'W', 'l': 'x', 'O': 'X',
 		'i': 'y', 'L': 'Y', 'J': 'z', 'n': 'Z',
+		')': '!', '>': '"', '(': '#', '[': '$', '!': '%', '{': '&',
+		':': '\'', ';': '(', '@': ')', '#': '*', ',': '+', '}': ',',
+		'~': '-', '"': '.', '\\': '/', '_': ':', '&': ';', '-': '<',
+		'.': '=', '`': '>', '*': '?', '%': '@', '|': '[', '/': '\\',
+		'^': ']', '?': '^', '=': '_', '+': '`', ']': '{', '<': '|',
+		'$': '}', '\'': '~',
 	}
 }
 
@@ -208,14 +246,13 @@ func encrypt_custom(plainText string) string {
 
 	for _, char := range plainText {
 		// First checks is the curren rune is existing in the map list
-		// if it does returns and write the coresponding character
+		// if it does returns the coresponding character from the list
 		if _, ok := encryptMap[char]; ok {
 			encryptedText.WriteRune(encryptMap[char])
 		} else {
 			encryptedText.WriteRune(char)
 		}
 	}
-
 	return encryptedText.String()
 }
 
