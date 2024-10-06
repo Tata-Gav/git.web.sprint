@@ -60,7 +60,7 @@ Enter the message + Enter:
 $ This is a secret message.
 
 Decrypted message using reverse:
-$ .essagem tceres a siht
+$ Gdre re M eqSCqf jqeeMNq.
 
 ## The Cyphers Used:
 
