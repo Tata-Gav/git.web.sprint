@@ -10,7 +10,8 @@ import (
 func main() {
 
 	// ----------------    TO DO list ---------------
-	// input has to be trimmed (remove whitespaces from the beginning and the end of the input)
+	// Encrypt the message with reverse
+	// Decrypt the message with reverse
 	// Encrypt the message with Custom
 	// Decrypt the message with Custom
 	// Documentation with Markdown
@@ -34,15 +35,14 @@ func main() {
 		} else {
 			fmt.Println(decrypt_reverse(message))
 		}
-	case "randomMap":
+	case "custom":
+		// Custom cipher handling
 		if toEncrypt {
-			fmt.Println(encrypt_mapping(message))
+			fmt.Println(encrypt_custom(message))
 		} else {
-			fmt.Println(decrypt_mapping(message))
+			fmt.Println(decrypt_custom(message))
 		}
-
 	}
-
 }
 
 func getInput() (toEncrypt bool, encoding string, message string) {
@@ -51,8 +51,7 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 	toEncrypt = false
 	encoding = ""
 
-	// Ввод операции шифрования или дешифрования-
-	// Input of encryption or decryption operation 
+	// Ввод операции шифрования или дешифрования-Input of encryption or decryption operation
 	for {
 		fmt.Println("\nSelect operation (1/2):")
 		fmt.Println("1. Encrypt.")
@@ -70,40 +69,32 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 		}
 	}
 
-	// вод выбора шифра
-	// ВEntering the cipher selection
+	// Ввод выбора шифра
 	for {
-		fmt.Println("\nSelect cypher (1/2):")
+		fmt.Println("\nSelect cypher (1/3):")
 		fmt.Println("1. ROT13.")
 		fmt.Println("2. Reverse.")
-		fmt.Println("3. Random MAP.")
+		fmt.Println("3. Random mapping.")
 		fmt.Scan(&cypherInput)
 
-		switch cypherInput {
-		case "1":
-			fmt.Println(" 1 ")
-			//Используем toROT13 для выбора между шифрами
-			// Using toROT13 to choose between ciphers
-			encoding = "ROT13" 
+		if cypherInput == "1" {
+			encoding = "ROT13"
 			break
-		case "2":
-			encoding = "reverse"
+		} else if cypherInput == "2" {
+			encoding = "reverse" // Используем toROT13 для выбора между шифрами
 			break
-		case "3":
-			encoding = "randomMap"
+		} else if cypherInput == "3" {
+			encoding = "custom"
 			break
-		default :
-			fmt.Println(" default ")
+		} else {
+			fmt.Println("Invalid input. Please select 1, 2 or 3")
 		}
-
 	}
-	
-	// enter message from custum
+	// enter message from custom
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Println("\nEnter the message:")
 	message, _ = reader.ReadString('\n')
-	// Trim possible spaces at the beginning and end Обрезаем возможные пробелы в начале и конце
-	message = message[:len(message)-1] // Remove the newline character Убираем символ новой строки
+	message = strings.TrimSpace(message) // Remove newlines and spaces
 	return
 }
 
@@ -121,7 +112,7 @@ func encrypt_rot13(s string) string {
 			}
 		}
 		// checks is it big letter and after shiftIn is it bigger then 'Z'
-		// it its bigger them
+		// if its bigger then
 		if 'A' <= ch && ch <= 'Z' {
 			ch += 13
 			if ch > 'Z' {
@@ -133,10 +124,9 @@ func encrypt_rot13(s string) string {
 	return result
 }
 
-//--------------------------------------------------------
-
 // Decrypt the message with rot13
 func decrypt_rot13(s string) string {
+	// ROT13 decryption is the same as encryption (symmetric)
 	return encrypt_rot13(s)
 }
 
@@ -157,43 +147,69 @@ func encrypt_reverse(s string) string {
 
 // Reverse Alphabet Decryption
 func decrypt_reverse(s string) string {
+	// Reverse decryption is the same as encryption
 	return encrypt_reverse(s)
 }
 
-func encrypt_mapping(s string) string {
-	charMap := map[rune]rune{
-		'a': 'F', 'B': 'x', 'c': 'Q', 'D': 'l', 'e': 'A', 
-		'F': 'm', 'g': 'T', 'H': 'p', 'i': 'W', 'J': 'v', 
-		'k': 'U', 'L': 'b', 'm': 'C', 'N': 'r', 'o': 'Y', 
-		'P': 'd', 'q': 'G', 'R': 'o', 's': 'K', 'T': 'h', 
-		'u': 'V', 'V': 'e', 'w': 'N', 'X': 'j', 'y': 'S', 
-		'Z': 'i',
+//------------------------------------
+// Custom Cipher with map[rune]rune
+//------------------------------------
+
+func createEncryptMap() map[rune]rune {
+	return map[rune]rune{
+		'a': 'M', 'A': 'c', 'b': 'm', 'B': 'Q', 'c': 'S', 'C': 'F',
+		'd': 'y', 'D': 'W', 'e': 'q', 'E': 'A', 'f': 'v', 'F': 'X',
+		'g': 'N', 'G': 'p', 'h': 'd', 'H': 'u', 'i': 'r', 'I': 'V',
+		'j': 'w', 'J': 'Y', 'k': 'g', 'K': 'I', 'l': 'z', 'L': 'T',
+		'm': 'j', 'M': 'a', 'n': 'D', 'N': 'K', 'o': 'x', 'O': 't',
+		'p': 'Z', 'P': 'B', 'q': 's', 'Q': 'U', 'r': 'C', 'R': 'b',
+		's': 'e', 'S': 'E', 't': 'f', 'T': 'G', 'u': 'H', 'U': 'k',
+		'v': 'R', 'V': 'P', 'w': 'o', 'W': 'h', 'x': 'l', 'X': 'O',
+		'y': 'i', 'Y': 'L', 'z': 'J', 'Z': 'n',
 	}
-
-	fmt.Println(charMap['a'])
-
-	var result strings.Builder
-	for _, char := range s {
-		if (char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z') {
-			result.WriteRune(charMap[char])
-		} else {
-			result.WriteRune(char)
-		}
-	}
-	return result.String()
-
-
-
-	//if emoji, exists := emojiMap[char]; exists{}
-
-
 }
 
-func decrypt_mapping (s string) string {
+func createDecryptMap() map[rune]rune {
+	return map[rune]rune{
+		'M': 'a', 'c': 'A', 'm': 'b', 'Q': 'B', 'S': 'c', 'F': 'C',
+		'y': 'd', 'W': 'D', 'q': 'e', 'A': 'E', 'v': 'f', 'X': 'F',
+		'N': 'g', 'p': 'G', 'd': 'h', 'u': 'H', 'r': 'i', 'V': 'I',
+		'w': 'j', 'Y': 'J', 'g': 'k', 'I': 'K', 'z': 'l', 'T': 'L',
+		'j': 'm', 'a': 'M', 'D': 'n', 'K': 'N', 'x': 'o', 't': 'O',
+		'Z': 'p', 'B': 'P', 's': 'q', 'U': 'Q', 'C': 'r', 'b': 'R',
+		'e': 's', 'E': 'S', 'f': 't', 'G': 'T', 'H': 'u', 'k': 'U',
+		'R': 'v', 'P': 'V', 'o': 'w', 'h': 'W', 'l': 'x', 'O': 'X',
+		'i': 'y', 'L': 'Y', 'J': 'z', 'n': 'Z',
+	}
+}
 
-	// reverseEmoji := make(map[string]rune)
-	// for k, v := emojiMap {
-	
-	return "decrypt mapping not ready"
-	//tata
+func encrypt_custom(plainText string) string {
+	encryptMap := createEncryptMap()
+	var encryptedText strings.Builder
+
+	for _, char := range plainText {
+		// First checks is the curren rune is existing in the map list
+		// if it does returns and write the coresponding character
+		if _, ok := encryptMap[char]; ok {
+			encryptedText.WriteRune(encryptMap[char])
+		} else {
+			encryptedText.WriteRune(char)
+		}
+	}
+
+	return encryptedText.String()
+}
+
+func decrypt_custom(encryptedText string) string {
+	decryptMap := createDecryptMap()
+	var decryptedText strings.Builder
+	for _, char := range encryptedText {
+		if _, ok := decryptMap[char]; ok {
+			decryptedText.WriteRune(decryptMap[char])
+		} else {
+			decryptedText.WriteRune(char)
+		}
+
+	}
+	return decryptedText.String()
 }
