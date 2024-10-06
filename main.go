@@ -50,13 +50,15 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 	var cypherInput string
 	toEncrypt = false
 	encoding = ""
-
+	fmt.Println("\nWelcome to the Cypher Tool!")
 	// Ввод операции шифрования или дешифрования-Input of encryption or decryption operation
 	for {
 		fmt.Println("\nSelect operation (1/2):")
 		fmt.Println("1. Encrypt.")
 		fmt.Println("2. Decrypt.")
-		fmt.Scan(&operationInput)
+		reader := bufio.NewReader(os.Stdin)
+		operationInput, _ = reader.ReadString('\n')
+		operationInput = strings.TrimSpace(operationInput) // Remove newlines and spaces
 
 		if operationInput == "1" {
 			toEncrypt = true
@@ -75,7 +77,9 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 		fmt.Println("1. ROT13.")
 		fmt.Println("2. Reverse.")
 		fmt.Println("3. Random mapping.")
-		fmt.Scan(&cypherInput)
+		reader := bufio.NewReader(os.Stdin)
+		cypherInput, _ = reader.ReadString('\n')
+		cypherInput = strings.TrimSpace(cypherInput) // Remove newlines and spaces
 
 		if cypherInput == "1" {
 			encoding = "ROT13"
