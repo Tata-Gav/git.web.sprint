@@ -22,6 +22,7 @@ The Cypher Tool consists of the following functions:
 - Allows the user to select the encryption type
 - Allows the user to input the message to encrypt/decrypt
 - Outputs the result of the operation
+- Offer contue choose 
 
 
 ## Features
@@ -61,6 +62,11 @@ $ This is a secret message.
 
 Decrypted message using reverse:
 $ Gdre re M eqSCqf jqeeMNq.
+
+Enter the "Y" or "y" + Enter if you want to continue:
+
+```bash
+$ y
 
 ## The Cyphers Used:
 
