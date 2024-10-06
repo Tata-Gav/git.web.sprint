@@ -8,39 +8,55 @@ import (
 )
 
 func main() {
-
-	// ----------------    TO DO list ---------------
-	// Encrypt the message with reverse
-	// Decrypt the message with reverse
-	// Encrypt the message with Custom
-	// Decrypt the message with Custom
+	fmt.Println("\nWelcome to the Cypher Tool 2024")
+	// ----------------    TO DO list --------------
 	// Documentation with Markdown
 
 	var toEncrypt bool
 	var encoding string
 	var message string
 
-	toEncrypt, encoding, message = getInput()
+	for {
+		toEncrypt, encoding, message = getInput()
+		if toEncrypt {
+			fmt.Println("\nEncrypted message using " + encoding + ": ")
+		} else {
+			fmt.Println("\nDecrypted message using " + encoding + ": ")
+		}
 
-	switch encoding {
-	case "ROT13":
-		if toEncrypt {
-			fmt.Println(encrypt_rot13(message))
-		} else {
-			fmt.Println(decrypt_rot13(message))
+		switch encoding {
+		case "ROT13":
+			if toEncrypt {
+
+				fmt.Println(encrypt_rot13(message))
+			} else {
+
+				fmt.Println(decrypt_rot13(message))
+			}
+		case "reverse":
+			if toEncrypt {
+				fmt.Println(encrypt_reverse(message))
+			} else {
+				fmt.Println(decrypt_reverse(message))
+			}
+		case "custom":
+			// Custom cipher handling
+			if toEncrypt {
+				fmt.Println(encrypt_custom(message))
+			} else {
+				fmt.Println(decrypt_custom(message))
+			}
 		}
-	case "reverse":
-		if toEncrypt {
-			fmt.Println(encrypt_reverse(message))
-		} else {
-			fmt.Println(decrypt_reverse(message))
-		}
-	case "custom":
-		// Custom cipher handling
-		if toEncrypt {
-			fmt.Println(encrypt_custom(message))
-		} else {
-			fmt.Println(decrypt_custom(message))
+
+		// Asks user does he want to continue with using the tool
+		fmt.Print("\n If you want to continue using the tool press 'Y' and press Enter: ")
+		var noExit string
+		reader := bufio.NewReader(os.Stdin)
+		noExit, _ = reader.ReadString('\n')
+		noExit = strings.TrimSpace(noExit) // Remove newlines and spaces
+		if !(noExit == "y" || noExit == "Y") {
+			fmt.Println("\n Tank you for using Cyper Tool 2024\n")
+			break
 		}
 	}
 }
@@ -50,10 +66,9 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 	var cypherInput string
 	toEncrypt = false
 	encoding = ""
-	fmt.Println("\nWelcome to the Cypher Tool!")
 	// Ввод операции шифрования или дешифрования-Input of encryption or decryption operation
 	for {
-		fmt.Println("\nSelect operation (1/2):")
+		fmt.Println("\nSelect operation (1/2) and press Enter:")
 		fmt.Println("1. Encrypt.")
 		fmt.Println("2. Decrypt.")
 		reader := bufio.NewReader(os.Stdin)
@@ -73,7 +88,7 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 
 	// Ввод выбора шифра
 	for {
-		fmt.Println("\nSelect cypher (1/3):")
+		fmt.Println("\nSelect cypher and press Enter:")
 		fmt.Println("1. ROT13.")
 		fmt.Println("2. Reverse.")
 		fmt.Println("3. Random mapping.")
@@ -96,7 +111,7 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 	}
 	// enter message from custom
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("\nEnter the message:")
+	fmt.Println("\nEnter the message and press Enter: ")
 	message, _ = reader.ReadString('\n')
 	message = strings.TrimSpace(message) // Remove newlines and spaces
 	return
@@ -217,3 +232,8 @@ func decrypt_custom(encryptedText string) string {
 	}
 	return decryptedText.String()
 }
+
+/* func isEmpty (message string) bool {
+	if len
+	return true
+} */
