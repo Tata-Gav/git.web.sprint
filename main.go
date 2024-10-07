@@ -53,9 +53,9 @@ func main() {
 		case "Random mapping":
 			// Custom cipher handling
 			if toEncrypt {
-				fmt.Println(encrypt_custom(message))
+				fmt.Println(encrypt_mappin(message))
 			} else {
-				fmt.Println(decrypt_custom(message))
+				fmt.Println(decrypt_mapping(message))
 			}
 		}
 
@@ -194,10 +194,9 @@ func decrypt_reverse(s string) string {
 	return encrypt_reverse(s)
 }
 
-//------------------------------------
+// ------------------------------------
 // Custom Cipher with map[rune]rune
-//------------------------------------
-
+// ------------------------------------
 func createEncryptMap() map[rune]rune {
 	return map[rune]rune{
 		'a': 'M', 'A': 'c', 'b': 'm', 'B': 'Q', 'c': 'S', 'C': 'F',
@@ -240,7 +239,8 @@ func createDecryptMap() map[rune]rune {
 	}
 }
 
-func encrypt_custom(plainText string) string {
+// Encrypt message by using encryptMap list
+func encrypt_mappin(plainText string) string {
 	encryptMap := createEncryptMap()
 	var encryptedText strings.Builder
 
@@ -257,7 +257,7 @@ func encrypt_custom(plainText string) string {
 	return encryptedText.String()
 }
 
-func decrypt_custom(encryptedText string) string {
+func decrypt_mapping(encryptedText string) string {
 	decryptMap := createDecryptMap()
 	var decryptedText strings.Builder
 	for _, char := range encryptedText {
