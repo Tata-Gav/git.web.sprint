@@ -9,15 +9,18 @@ import (
 
 const (
 	// ANSI escape codes for colors used in printing the text
-	Reset  = "\033[0m"
-	Red    = "\033[31m"
-	Green  = "\033[32m"
-	Yellow = "\033[33m"
-	Blue   = "\033[34m"
+	Reset   = "\033[0m"
+	Red     = "\033[31m"
+	Green   = "\033[32m"
+	Yellow  = "\033[33m"
+	Blue    = "\033[34m"
+	Magenta = "\033[35m"
+	Cyan    = "\033[36m"
+	Gray    = "\033[37m"
 )
 
 func main() {
-	fmt.Println(Blue + "\n\t| ------------------------------- |")
+	fmt.Println(Yellow + "\n\t| ------------------------------- |")
 	fmt.Println("\t| Welcome to the Cypher Tool 2024 |")
 	fmt.Println("\t| ------------------------------- |" + Reset)
 
@@ -67,7 +70,7 @@ func main() {
 		noExit = strings.TrimSpace(noExit) // Remove newlines and spaces
 		if !(noExit == "y" || noExit == "Y") {
 			// Exit message
-			fmt.Println(Blue + "\n\t****  Thank you for using Cyper Tool 2024  ****\n" + Reset)
+			fmt.Println(Yellow + "\n\t****  Thank you for using Cyper Tool 2024  ****\n" + Reset)
 			break
 		}
 	}
@@ -82,8 +85,8 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 	// Input of encryption or decryption operation
 	for {
 		fmt.Println("\nSelect operation 1 or 2 and press \"Enter\":")
-		fmt.Println(Blue + "\t1. Encrypt." + Reset)
-		fmt.Println(Blue + "\t2. Decrypt." + Reset)
+		fmt.Println(Cyan + "\t1. Encrypt." + Reset)
+		fmt.Println(Cyan + "\t2. Decrypt." + Reset)
 		fmt.Print(Green + "Enter your input: " + Reset)
 		operationInput = readInput()
 
@@ -101,7 +104,7 @@ func getInput() (toEncrypt bool, encoding string, message string) {
 	// Ввод выбора шифра
 	for {
 		fmt.Println("\nSelect cypher and press \"Enter\":")
-		fmt.Println(Blue + "\t1. ROT13.")
+		fmt.Println(Cyan + "\t1. ROT13.")
 		fmt.Println("\t2. Reverse.")
 		fmt.Println("\t3. Random mapping." + Reset)
 		fmt.Print(Green + "Enter your input: " + Reset)
